@@ -1,0 +1,13 @@
+{
+  "CN": "Test Root CA",
+  "key": {
+    "algo": "rsa",
+    "size": 4096
+  },
+  "names": [
+    {
+      "O": "Test",
+      "OU": "Test Root CA"
+    }
+  ]
+}

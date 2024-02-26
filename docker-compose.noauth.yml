@@ -1,0 +1,44 @@
+---
+version: '3'
+services:
+  proxy:
+    hostname: proxy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      - proxy
+      - '--agent-server.listen-address=:4242'
+      - '--agent-server.tls.file.key=/certs/proxy-key.pem'
+      - '--agent-server.tls.file.cert=/certs/proxy.pem'
+      - '--agent-server.tls.refresh=1s'
+      - '--http-proxy.listen-address=:3128'
+      - '--auth.type=noauth'
+    volumes:
+      - ./tests/cfssl/certs:/certs:ro
+    ports:
+      - "3128:3128/tcp"
+  agent-4711:
+    hostname: agent-4711
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      - agent
+      - '--agent-client.server-address=proxy:4242'
+      - '--agent-client.tls.file.root-ca=/certs/ca.pem'
+      - '--auth.noauth.agent-id=4711'
+    volumes:
+      - ./tests/cfssl/certs:/certs:ro
+  agent-4712:
+    hostname: agent-4712
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      - agent
+      - '--agent-client.server-address=proxy:4242'
+      - '--agent-client.tls.file.root-ca=/certs/ca.pem'
+      - '--auth.noauth.agent-id=4712'
+    volumes:
+      - ./tests/cfssl/certs:/certs:ro

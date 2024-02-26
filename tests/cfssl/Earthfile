@@ -1,0 +1,36 @@
+VERSION 0.7
+FROM cfssl/cfssl:v1.6.4
+WORKDIR "/workdir"
+RUN apt-get update && apt-get install -y --no-install-recommends openssl bc && rm -rf /var/lib/apt/lists/*
+
+ARG --global GEN_DIR = certs
+
+version:
+    RUN --no-cache cfssl version
+
+clean:
+    LOCALLY
+    RUN rm -f *.pem
+    RUN rm -f *.csr
+    RUN rm -rf certs/
+
+sources:
+    COPY *.json .
+
+ca:
+    FROM +sources
+    RUN cfssl gencert -initca ca.json | cfssljson -bare ca
+
+    RUN chmod +r *.pem
+
+    SAVE ARTIFACT ca-key.pem AS LOCAL ${GEN_DIR}/ca-key.pem
+    SAVE ARTIFACT ca.pem AS LOCAL ${GEN_DIR}/ca.pem
+
+hosts:
+    FROM +ca
+
+    RUN cfssl gencert -ca ca.pem -ca-key ca-key.pem -config cfssl.json -profile=proxy proxy.json | cfssljson -bare proxy
+    RUN cfssl gencert -ca ca.pem -ca-key ca-key.pem -config cfssl.json -profile=agent agent.json | cfssljson -bare agent
+
+    RUN chmod +r *.pem
+    SAVE ARTIFACT *.pem AS LOCAL ${GEN_DIR}/
