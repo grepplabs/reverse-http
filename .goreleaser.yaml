@@ -62,18 +62,43 @@ signs:
 
 # create a docker image
 # https://goreleaser.com/customization/docker
+# https://goreleaser.com/cookbooks/multi-platform-docker-images/
 dockers:
   - image_templates:
-      - "ghcr.io/grepplabs/reverse-http:{{ .Tag }}"
-      - "ghcr.io/grepplabs/reverse-http:latest"
+      - "ghcr.io/grepplabs/reverse-http:{{ .Tag }}-amd64"
     dockerfile: Dockerfile
+    use: buildx
     build_flag_templates:
       - "--pull"
+      - "--platform=linux/amd64"
       - "--label=org.opencontainers.image.created={{.Date}}"
       - "--label=org.opencontainers.image.name={{.ProjectName}}"
       - "--label=org.opencontainers.image.revision={{.FullCommit}}"
       - "--label=org.opencontainers.image.version={{.Version}}"
       - "--label=org.opencontainers.image.source={{.GitURL}}"
+  - image_templates:
+      - "ghcr.io/grepplabs/reverse-http:{{ .Tag }}-arm64"
+    dockerfile: Dockerfile
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--platform=linux/arm64"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.name={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--label=org.opencontainers.image.source={{.GitURL}}"
+
+# https://goreleaser.com/customization/docker_manifest/
+docker_manifests:
+- name_template: 'ghcr.io/grepplabs/reverse-http:{{ .Tag }}'
+  image_templates:
+  - 'ghcr.io/grepplabs/reverse-http:{{ .Tag }}-amd64'
+  - 'ghcr.io/grepplabs/reverse-http:{{ .Tag }}-arm64'
+- name_template: 'ghcr.io/grepplabs/reverse-http:latest'
+  image_templates:
+  - 'ghcr.io/grepplabs/reverse-http:{{ .Tag }}-amd64'
+  - 'ghcr.io/grepplabs/reverse-http:{{ .Tag }}-arm64'
 
 # signs our docker image
 # https://goreleaser.com/customization/docker_sign
