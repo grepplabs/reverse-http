@@ -1,4 +1,7 @@
 # reverse-http
+[![Build Status](https://github.com/grepplabs/reverse-http/actions/workflows/build.yml/badge.svg)](https://github.com/grepplabs/reverse-http/actions/workflows/build.yml)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Release](https://img.shields.io/github/v/release/grepplabs/reverse-http?sort=semver)](https://github.com/grepplabs/reverse-http/releases)
 
 Reverse HTTP proxy over QUIC protocol ([RFC 9000](https://datatracker.ietf.org/doc/html/rfc9000)).
 
