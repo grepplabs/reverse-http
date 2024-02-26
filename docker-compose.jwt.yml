@@ -5,7 +5,7 @@ services:
     hostname: proxy
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.develop
     command:
       - proxy
       - '--agent-server.listen-address=:4242'
@@ -23,7 +23,7 @@ services:
     hostname: agent-4711
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.develop
     command:
       - agent
       - '--agent-client.server-address=proxy:4242'
@@ -37,7 +37,7 @@ services:
     hostname: agent-4712
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.develop
     command:
       - agent
       - '--agent-client.server-address=proxy:4242'
