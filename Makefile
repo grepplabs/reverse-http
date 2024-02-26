@@ -5,11 +5,15 @@
 ROOT_DIR      := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 BUILD_FLAGS   ?=
-VERSION       = "0.0.1"
+VERSION       = "develop"
 BRANCH        = $(shell git rev-parse --abbrev-ref HEAD)
 REVISION      = $(shell git describe --tags --always --dirty)
 BUILD_DATE    = $(shell date +'%Y.%m.%d-%H:%M:%S')
-LDFLAGS       ?= -w -s
+LDFLAGS       ?= -w -s \
+	-X github.com/grepplabs/reverse-http/config.Version=${VERSION} \
+	-X github.com/grepplabs/reverse-http/config.Commit=${REVISION} \
+	-X github.com/grepplabs/reverse-http/config.Date=${BUILD_DATE}
+
 BINARY        = reverse-http
 
 TEST_AGENT_ID   = 4711
