@@ -39,10 +39,43 @@ Reverse HTTP proxy over QUIC protocol ([RFC 9000](https://datatracker.ietf.org/d
   * Upon connection, the LB server retrieves the HTTP proxy address and an agentID from Memcached.
     * The LB server then sends an `HTTP CONNECT` request to the proxy.
 
+## Install binary release
+
+1. Get latest tag version
+    ```
+    TAG=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/grepplabs/reverse-http/releases/latest | grep -o 'tag/.*' | sed 's/tag\///')
+    VERSION=$(echo -n $TAG | grep -o 'v[0-9.]*' | sed 's/v//')
+    ```
+2. Download the release
+   * Linux
+     ```
+      curl -Ls https://github.com/grepplabs/reverse-http/releases/download/${TAG}/reverse-http_${VERSION}_linux_amd64.tar.gz | tar xz
+     ```
+   * MacOS Intel
+     ```
+     curl -Ls https://github.com/grepplabs/reverse-http/releases/download/${TAG}/reverse-http_${VERSION}_darwin_amd64.tar.gz | tar xz
+     ```
+
+   * MacOS Apple Silicon
+     ```
+     curl -Ls https://github.com/grepplabs/reverse-http/releases/download/${TAG}/reverse-http_${VERSION}_darwin_arm64.tar.gz | tar xz
+     ```
+
+3. Move the binary to a file location on your system PATH.
+    ```
+    mv ./reverse-http /usr/local/bin/reverse-http
+    ```
+
+## Docker run
+  ```
+  docker run --rm ghcr.io/grepplabs/reverse-http:latest --help
+  ```
+
 ## Build
 ### build binary
 
     make clean build
+
 
 ## Quick requirements
 
