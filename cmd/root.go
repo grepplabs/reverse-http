@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -20,6 +21,9 @@ type CLI struct {
 	Proxy        config.ProxyCmd        `name:"proxy" cmd:"" help:"Start proxy server."`
 	LoadBalancer config.LoadBalancerCmd `name:"lb" cmd:"" help:"Start load balancer."`
 	Auth         config.AuthCmd         `name:"auth" cmd:"" help:"auth tools."`
+	Version      struct {
+		Verbose bool `short:"V" help:"Verbose."`
+	} `name:"version" cmd:"" help:"Show version"`
 }
 
 func Execute() {
@@ -51,6 +55,16 @@ func Execute() {
 	case "auth jwt token":
 		err := runAuthJwtToken(&cli.Auth.JwtCmd.TokenCmd)
 		ctx.FatalIfErrorf(err)
+	case "version":
+		if cli.Version.Verbose {
+			_ = json.NewEncoder(os.Stdout).Encode(map[string]any{
+				"version": config.Version,
+				"commit":  config.Commit,
+				"date":    config.Date,
+			})
+		} else {
+			fmt.Println(config.Version)
+		}
 	default:
 		fmt.Println(ctx.Command())
 		os.Exit(1)
