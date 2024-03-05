@@ -7,7 +7,7 @@ require (
 	github.com/alecthomas/kong-yaml v0.2.0
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
 	github.com/bradfitz/gomemcache v0.0.0-20230905024940-24af94b03874
-	github.com/golang-jwt/jwt/v5 v5.2.0
+	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/google/uuid v1.6.0
 	github.com/grepplabs/cert-source v0.0.3
 	github.com/oklog/run v1.1.0
