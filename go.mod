@@ -11,7 +11,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/grepplabs/cert-source v0.0.3
 	github.com/oklog/run v1.1.0
-	github.com/quic-go/quic-go v0.43.0
+	github.com/quic-go/quic-go v0.43.1
 	github.com/stretchr/testify v1.9.0
 )
 
