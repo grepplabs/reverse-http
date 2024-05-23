@@ -8,7 +8,7 @@ RUN go mod download
 COPY . .
 RUN make vendor build
 
-FROM alpine:3.19
+FROM alpine:3.20
 COPY --from=builder /app/reverse-http /reverse-http
 USER 65532:65532
 ENTRYPOINT ["/reverse-http"]
