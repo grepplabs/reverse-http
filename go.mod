@@ -12,7 +12,7 @@ require (
 	github.com/grepplabs/cert-source v0.0.8
 	github.com/oklog/run v1.2.0
 	github.com/quic-go/quic-go v0.46.0
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
 )
 
 require (
