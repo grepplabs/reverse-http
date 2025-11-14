@@ -3,7 +3,7 @@ module github.com/grepplabs/reverse-http
 go 1.21
 
 require (
-	github.com/alecthomas/kong v0.9.0
+	github.com/alecthomas/kong v1.13.0
 	github.com/alecthomas/kong-yaml v0.2.0
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
 	github.com/bradfitz/gomemcache v0.0.0-20230905024940-24af94b03874
